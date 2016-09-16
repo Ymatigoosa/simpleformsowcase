@@ -1,4 +1,5 @@
-require('styles/App.scss');
+require('normalize.css');
+require('styles/App.styl');
 
 import React from 'react';
 import AppBar from 'material-ui/AppBar';
