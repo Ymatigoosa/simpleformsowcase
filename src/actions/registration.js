@@ -6,7 +6,8 @@ export const ActionTypes = createActionTypes('pages/registration/', {
   PROFESSION_CHANGED: null,
   PHONE_CHANGED: null,
   PROFESSION_HINT_SET_STATE: null,
-  PHONE_HINT_SET_STATE: null
+  PHONE_HINT_SET_STATE: null,
+  NEW_PHONE_COUNTRY_SELECTED: null
 });
 
 export const Actions = {
@@ -36,7 +37,12 @@ export const Actions = {
   }),
 
   togglePhoneHint: (isopen) => ({
-    type: ActionTypes.PHONE_HINT_INDEX_CHANGED,
+    type: ActionTypes.PHONE_HINT_SET_STATE,
     playload: isopen
+  }),
+
+  selectNewPhoneCountry: (code) => ({
+    type: ActionTypes.NEW_PHONE_COUNTRY_SELECTED,
+    playload: code
   })
 };

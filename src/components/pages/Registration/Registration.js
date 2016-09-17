@@ -3,12 +3,13 @@ require('flag-icon-css/css/flag-icon.css');
 import React from 'react';
 import Highlight from 'react-highlighter';
 import FaAngleDown from 'react-icons/lib/fa/angle-down';
+import FaQuestionCircle from 'react-icons/lib/fa/question-circle';
 import classNames from 'classnames';
 
 class DropdownhintItem extends React.Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       highlighted: false
     };
@@ -46,6 +47,22 @@ class Registration extends React.Component {
       'Registration__input': true,
       'Registration__input_ddactive': professiondropdownactive
     });
+
+    const countrySelectCodeOpen = this.props.countrySelectCodeOpen;
+    const countryhintclasses = classNames({
+      'Registration__input-hint': true,
+      'Registration__input-hint_hidden': !countrySelectCodeOpen
+    });
+    const countryinputclasses = classNames({
+      'Registration__input': true,
+      'Registration__input_phone': true,
+      'Registration__input_ddactive': countrySelectCodeOpen
+    });
+    const countrybtnclasses = classNames({
+      'Registration__phone-btn': true,
+      'Registration__phone-btn_active': countrySelectCodeOpen
+    });
+
     //console.log(this.props, professiondropdownactive)
     return <div className='Registration'>
       <span className='Registration__header'>
@@ -81,16 +98,35 @@ class Registration extends React.Component {
       <div className='Registration__row'>
         <span className='Registration__label'>Телефон</span>
 
-        <div className='Registration__phone-btn' >
-          <span className="flag-icon flag-icon-ru"></span>&nbsp;<FaAngleDown />
+        <div
+          className={countrybtnclasses}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            setTimeout(() => this.refs.phoneinput.focus(), 0);
+            actions.togglePhoneHint(!this.props.countrySelectCodeOpen);
+        }}>
+          {this.props.currentCountryCode !== null
+            ? (<span><span className={`flag-icon flag-icon-${this.props.countriesWithCodes[this.props.currentCountryCode].codeIso}`}></span>&nbsp;<FaAngleDown /></span>)
+            : (<span><FaQuestionCircle />&nbsp;<FaAngleDown /></span>)
+          }
         </div>
-        <input className='Registration__input Registration__input_phone' type='text' placeholder='+7 495 123-45-67' value='+7' />
-        <ul className='Registration__input-hint Registration__input-hint_hidden'>
-            <li className='Registration__input-hint-item'>
-              <span className="flag-icon flag-icon-ru"></span>
-              {' +7 '}
-              <span className='Registration__input-hint-countryname'>Россия</span>
-            </li>
+        <input
+          ref='phoneinput'
+          className={countryinputclasses}
+          type='text'
+          placeholder='+7 495 123-45-67'
+          value={this.props.phone}
+          onChange={(e) => actions.changePhone(e.target.value)}
+          onBlur={(e) => actions.togglePhoneHint(false)}/>
+        <ul className={countryhintclasses}>
+            {Object.keys(this.props.countriesWithCodes).map((code) => {
+              const country = this.props.countriesWithCodes[code];
+              return (<DropdownhintItem key={code} onMouseDown={(e) => actions.selectNewPhoneCountry(code)}>
+                <span className={`flag-icon flag-icon-${country.codeIso}`}></span>
+                {` ${country.codePhone} `}
+                <span className='Registration__input-hint-countryname'>{country.countryName}</span>
+              </DropdownhintItem>)
+            })}
         </ul>
       </div>
       <div className='Registration__row'>

@@ -17,14 +17,13 @@ const initialState = {
   ],
   professionHintsOpen: false,
   phone: '',
-  phoneNormalized: '',
   countriesWithCodes: {
-    '7': {countryName: 'Россия', codeIso: 'ru', codePhone: '+7'},
-    '1246': {countryName: 'Барбадос', codeIso: 'bb', codePhone: '+1246'},
-    '1': {countryName: 'США', codeIso: 'us', codePhone: '+1'}
+    '+7': {countryName: 'Россия', codeIso: 'ru', codePhone: '+7'},
+    '+1246': {countryName: 'Барбадос', codeIso: 'bb', codePhone: '+1246'},
+    '+1': {countryName: 'США', codeIso: 'us', codePhone: '+1'}
   },
   currentCountryCode: null,
-  countrySelectedCodeOpen: false
+  countrySelectCodeOpen: false
 };
 
 export default createReducer(initialState, {
@@ -54,16 +53,15 @@ export default createReducer(initialState, {
   [ActionTypes.PHONE_CHANGED]: (state, action) => {
     const phone = action.playload;
     const normalized = phone.replace(/\D/g, '');
-    const findedcountries = Object.keys(state.countriesWithCodes).filter((i) => normalized.startsWith(i));
+    const findedcountries = Object.keys(state.countriesWithCodes).filter((i) => ('+'+normalized).startsWith(i));
+    console.log(findedcountries);
     const countryid = findedcountries.length > 0
-      ? findedcountries[findedcountries.length - 1]
+      ? findedcountries[0]
       : null;
     return {
       ...state,
       phone: action.playload,
-      phoneNormalized: normalized,
-      currentCountryCode: countryid,
-      currentCountrySelectedCode: countryid
+      currentCountryCode: countryid
     };
   },
 
@@ -77,7 +75,17 @@ export default createReducer(initialState, {
   [ActionTypes.PHONE_HINT_SET_STATE]: (state, action) => {
     return {
       ...state,
-      countrySelectedCodeOpen: action.playload
+      countrySelectCodeOpen: action.playload
+    };
+  },
+
+  [ActionTypes.NEW_PHONE_COUNTRY_SELECTED]: (state, action) => {
+    const oldcountycode = state.currentCountryCode;
+
+    return {
+      ...state,
+      phone: oldcountycode !== null ? state.phone.replace(oldcountycode, action.playload) : action.playload + state.phone,
+      currentCountryCode: action.playload
     };
   }
 });
