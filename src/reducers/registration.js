@@ -54,7 +54,7 @@ export default createReducer(initialState, {
     const phone = action.playload;
     const normalized = phone.replace(/\D/g, '');
     const findedcountries = Object.keys(state.countriesWithCodes).filter((i) => ('+'+normalized).startsWith(i));
-    console.log(findedcountries);
+    //console.log(findedcountries);
     const countryid = findedcountries.length > 0
       ? findedcountries[0]
       : null;

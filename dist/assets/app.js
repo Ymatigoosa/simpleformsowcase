@@ -20675,7 +20675,7 @@
 	  var findedcountries = Object.keys(state.countriesWithCodes).filter(function (i) {
 	    return ('+' + normalized).startsWith(i);
 	  });
-	  console.log(findedcountries);
+	  //console.log(findedcountries);
 	  var countryid = findedcountries.length > 0 ? findedcountries[0] : null;
 	  return _extends({}, state, {
 	    phone: action.playload,
