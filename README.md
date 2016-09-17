@@ -4,7 +4,7 @@ Test project
 
 ## Commands
 
-Run: `npm start`
+Run dev server: `npm start`
 
 Assembly production bundle: `npm run dist`
 
