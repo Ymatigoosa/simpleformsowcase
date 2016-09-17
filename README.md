@@ -1,13 +1,17 @@
 # About
 
-Little seed project
+Test project
+
+## Commands
+
+Run: `npm start`
+
+Assembly production bundle: `npm run dist`
 
 ## Technologies
 
 * React.js
 * Redux
-* React router
-* Material UI
 * Babel
 * Webpack/WebpackDevServer
-* Scss/Sass + Postcss
+* Stylus + Postcss
