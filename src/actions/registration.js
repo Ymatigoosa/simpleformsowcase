@@ -5,8 +5,6 @@ export const ActionTypes = createActionTypes('pages/registration/', {
   SURNAME_CHANGED: null,
   PROFESSION_CHANGED: null,
   PHONE_CHANGED: null,
-  PROFESSION_HINT_INDEX_CHANGED: null,
-  PHONE_HINT_INDEX_CHANGED: null,
   PROFESSION_HINT_SET_STATE: null,
   PHONE_HINT_SET_STATE: null
 });
@@ -32,18 +30,8 @@ export const Actions = {
     playload: text
   }),
 
-  changeProfessionHintHighlightedItem: (index) => ({
-    type: ActionTypes.PROFESSION_HINT_INDEX_CHANGED,
-    playload: index
-  }),
-
-  changePhoneHintHighlightedItem: (code) => ({
-    type: ActionTypes.PHONE_HINT_INDEX_CHANGED,
-    playload: code
-  }),
-
-  togglePhoneHint: (isopen) => ({
-    type: ActionTypes.PHONE_HINT_INDEX_CHANGED,
+  toggleProfessionHint: (isopen) => ({
+    type: ActionTypes.PROFESSION_HINT_SET_STATE,
     playload: isopen
   }),
 
